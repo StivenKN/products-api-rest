@@ -9,14 +9,15 @@ export class ProductRepository implements IProduct {
     this.db = new PrismaClient();
   }
 
-  public async get(): Promise<Product[]> {
+  public async get(): Promise<Product[] | null> {
     const products = await this.db.product.findMany();
 
     return products;
   }
 
-  public async getId(id: string): Promise<Product> {
-    throw new Error('Method not implemented.');
+  public async getId(id: string): Promise<Product | null> {
+    const product = await this.db.product.findUnique({ where: { id } });
+    return product;
   }
 
   public async create(product: Product): Promise<Product> {
@@ -27,7 +28,11 @@ export class ProductRepository implements IProduct {
     return new Product(id, title, description, price);
   }
 
-  public async edit(id: string, product: Product): Promise<void> {
-    throw new Error('Method not implemented.');
+  public async edit(id: string, product: Product): Promise<string> {
+    await this.db.product.update({
+      where: { id },
+      data: product,
+    });
+    return id;
   }
 }
