@@ -2,15 +2,15 @@ import { t } from 'elysia';
 
 export const productBodyDTO = {
   body: t.Object({
-    id: t.String(),
-    title: t.String(),
-    description: t.String(),
-    price: t.String(),
+    id: t.String({ minLength: 1 }),
+    title: t.String({ minLength: 1 }),
+    description: t.String({ minLength: 1 }),
+    price: t.String({ minLength: 1 }),
   }),
 };
 
 export const productParamsDTO = {
   params: t.Object({
-    id: t.String(),
+    id: t.String({ minLength: 1 }),
   }),
 };
