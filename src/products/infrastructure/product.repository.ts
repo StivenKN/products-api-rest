@@ -10,7 +10,9 @@ export class ProductRepository implements IProduct {
   }
 
   public async get(): Promise<Product[]> {
-    throw new Error('Method not implemented.');
+    const products = await this.db.product.findMany();
+
+    return products;
   }
 
   public async getId(id: string): Promise<Product> {

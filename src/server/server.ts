@@ -1,6 +1,6 @@
 import { env } from 'bun';
 import { Elysia } from 'elysia';
-import { productsRouter } from '../products/products.router';
+import { productsController } from '../products/application/products.controller';
 
 export class Server {
   private app: Elysia<'/api'>;
@@ -8,7 +8,7 @@ export class Server {
   constructor() {
     this.app = new Elysia({ prefix: '/api' });
     this.app.group('/v1', (app) => {
-      return app.use(productsRouter);
+      return app.use(productsController);
     });
   }
 
