@@ -9,7 +9,20 @@
     "elysia": "latest"
   },
   "devDependencies": {
-    "bun-types": "latest"
+    "@eslint/eslintrc": "^3.0.2",
+    "@eslint/js": "^9.1.1",
+    "@typescript-eslint/eslint-plugin": "^6.4.0",
+    "bun-types": "latest",
+    "eslint": "^9.1.1",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-config-standard-with-typescript": "^43.0.1",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-n": "^15.0.0 || ^16.0.0",
+    "eslint-plugin-promise": "^6.0.0",
+    "globals": "^15.0.0",
+    "prettier": "^3.2.5",
+    "prisma": "^5.13.0",
+    "typescript": "*"
   },
   "module": "src/index.js",
   "bun-create": {
