@@ -6,19 +6,28 @@ import { IProduct } from '../domain/IProduct.js';
 const productRepository: IProduct = new ProductRepository();
 
 export const productsController = new Elysia({ prefix: '/products' })
-  .get('/', async () => await productRepository.get())
+  .get('/', async () => {
+    return await productRepository.get();
+  })
   .get(
     '/:id',
-    async ({ params: { id } }) => await productRepository.getId(id),
+    async ({ params: { id } }) => {
+      return await productRepository.getId(id);
+    },
     productParamsDTO,
   )
   .post(
     '/',
-    async ({ body }) => await productRepository.create(body),
+    async ({ body, set }) => {
+      set.status = 'Created';
+      return await productRepository.create(body);
+    },
     productBodyDTO,
   )
   .patch(
     '/:id',
-    async ({ params: { id }, body }) => await productRepository.edit(id, body),
+    async ({ params: { id }, body }) => {
+      return await productRepository.edit(id, body);
+    },
     { ...productBodyDTO, ...productParamsDTO },
   );
