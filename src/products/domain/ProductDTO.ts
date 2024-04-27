@@ -2,6 +2,7 @@ import { t } from 'elysia';
 
 export const productBodyDTO = {
   body: t.Object({
+    id: t.String(),
     title: t.String({ minLength: 1 }),
     description: t.String({ minLength: 1 }),
     price: t.String({ minLength: 1 }),
