@@ -20,7 +20,8 @@ export const productsController = new Elysia({ prefix: '/products' })
     '/',
     async ({ body, set }) => {
       set.status = 'Created';
-      return await productRepository.create(body);
+      const product = await productRepository.create(body);
+      return { product };
     },
     productBodyDTO,
   )
