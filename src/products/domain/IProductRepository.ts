@@ -1,6 +1,6 @@
 import { Product } from './Product.js';
 
-export interface IProduct {
+export interface IProductRepository {
   get(): Promise<Product[] | null>;
   getId(id: string): Promise<Product | null>;
   create(product: Product): Promise<Product>;

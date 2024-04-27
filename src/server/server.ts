@@ -1,6 +1,6 @@
 import { env } from 'bun';
 import { Elysia } from 'elysia';
-import { productsController } from '../products/application/products.controller';
+import { productsRouter } from '../products/application/products.router.js';
 import swagger from '@elysiajs/swagger';
 
 export class Server {
@@ -10,7 +10,7 @@ export class Server {
     this.app = new Elysia({ prefix: '/api' });
     this.app.use(swagger());
     this.app.group('/v1', (app) => {
-      return app.use(productsController);
+      return app.use(productsRouter);
     });
   }
 

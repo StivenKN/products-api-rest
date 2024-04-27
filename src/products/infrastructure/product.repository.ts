@@ -1,27 +1,34 @@
 import { PrismaClient } from '@prisma/client';
-import { type IProduct } from '../domain/IProduct.js';
+import { type IProductRepository } from '../domain/IProductRepository.js';
 import { Product } from '../domain/Product.js';
 
-export class ProductRepository implements IProduct {
-  private readonly db: PrismaClient;
+export class ProductRepository implements IProductRepository {
+  private readonly _db: PrismaClient;
 
   constructor() {
-    this.db = new PrismaClient();
+    this._db = new PrismaClient();
   }
 
   public async get(): Promise<Product[] | null> {
-    const products = await this.db.product.findMany();
-
+    const products = await this._db.product.findMany();
     return products;
   }
 
   public async getId(id: string): Promise<Product | null> {
-    const product = await this.db.product.findUnique({ where: { id } });
-    return product;
+    const product = await this._db.product.findUnique({ where: { id } });
+
+    if (!product) return null;
+
+    return new Product(
+      product.id,
+      product.title,
+      product.description,
+      product.price,
+    );
   }
 
   public async create(product: Product): Promise<Product> {
-    const { id, title, description, price } = await this.db.product.create({
+    const { id, title, description, price } = await this._db.product.create({
       data: product,
     });
 
@@ -29,7 +36,7 @@ export class ProductRepository implements IProduct {
   }
 
   public async edit(id: string, product: Product): Promise<string> {
-    await this.db.product.update({
+    await this._db.product.update({
       where: { id },
       data: product,
     });

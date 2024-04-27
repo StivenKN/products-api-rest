@@ -1,18 +1,16 @@
 import { Elysia } from 'elysia';
-import { ProductRepository } from '../infrastructure/product.repository.js';
 import { productBodyDTO, productParamsDTO } from '../domain/ProductDTO.js';
-import { IProduct } from '../domain/IProduct.js';
+import { productController } from '../../server/dependencies.js';
 
-const productRepository: IProduct = new ProductRepository();
-
-export const productsController = new Elysia({ prefix: '/products' })
+export const productsRouter = new Elysia({ prefix: '/products' })
   .get('/', async () => {
-    return await productRepository.get();
+    return await productController.getProducts();
   })
   .get(
     '/:id',
     async ({ params: { id } }) => {
-      return await productRepository.getId(id);
+      const product = await productController.getProduct(id);
+      return { product };
     },
     productParamsDTO,
   )
@@ -20,7 +18,7 @@ export const productsController = new Elysia({ prefix: '/products' })
     '/',
     async ({ body, set }) => {
       set.status = 'Created';
-      const product = await productRepository.create(body);
+      const product = await productController.createProduct(body);
       return { product };
     },
     productBodyDTO,
@@ -28,7 +26,7 @@ export const productsController = new Elysia({ prefix: '/products' })
   .patch(
     '/:id',
     async ({ params: { id }, body }) => {
-      return await productRepository.edit(id, body);
+      return await productController.editProduct(id, body);
     },
     { ...productBodyDTO, ...productParamsDTO },
   );
